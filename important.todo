@@ -1,0 +1,59 @@
+darthjuda at ☁️ vps in ~/snippets on master [?]
+$ git add .
+warning: adding embedded git repository: stacks/swarmprom
+hint: You've added another git repository inside your current repository.
+hint: Clones of the outer repository will not contain the contents of
+hint: the embedded repository and will not know how to obtain it.
+hint: If you meant to add a submodule, use:
+hint: 
+hint: 	git submodule add <url> stacks/swarmprom
+hint: 
+hint: If you added this path by mistake, you can remove it from the
+hint: index with:
+hint: 
+hint: 	git rm --cached stacks/swarmprom
+hint: 
+hint: See "git help submodule" for more information.
+
+darthjuda at ☁️ vps in ~/snippets on master
+$ git rm --cached stacks/swarmprom
+error: the following file has staged content different from both the
+file and the HEAD:
+    stacks/swarmprom
+(use -f to force removal)
+
+darthjuda at ☁️ vps in ~/snippets on master
+$ docker service ls
+ID                  NAME                            MODE                REPLICAS            IMAGE                                          
+PORTS
+mgmd4cum876g        swarmprom_alertmanager          replicated          1/1                 
+stefanprodan/swarmprom-alertmanager:v0.14.0    
+4gj7116rzkjt        swarmprom_cadvisor              global              2/2                 
+google/cadvisor:latest                         
+o0uygvf1er9b        swarmprom_dockerd-exporter      global              2/2                 
+stefanprodan/caddy:latest                      
+d9vzci1li9ri        swarmprom_grafana               replicated          1/1                 
+stefanprodan/swarmprom-grafana:5.3.4           
+ko0oto6jgrh0        swarmprom_node-exporter         global              2/2                 
+stefanprodan/swarmprom-node-exporter:v0.16.0   
+iamoxs3xmm8o        swarmprom_prometheus            replicated          1/1                 
+stefanprodan/swarmprom-prometheus:v2.5.0       
+xwlxe7353zr0        swarmprom_unsee                 replicated          1/1                 
+cloudflare/unsee:v0.8.0                        
+fllbm4ownd44        traefik-consul_consul-leader    replicated          1/1                 
+consul:latest                                  
+3azwm2fwdyge        traefik-consul_consul-replica   replicated          3/3                 
+consul:latest                                  
+vhdyz6a6nqgf        traefik-consul_traefik          replicated          2/2                 
+traefik:v1.7                                   *:80->80/tcp, *:443->443/tcp
+
+darthjuda at ☁️ vps in ~/snippets on master
+$ git status
+On branch master
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	new file:   stacks/swarmprom
+
+
+
