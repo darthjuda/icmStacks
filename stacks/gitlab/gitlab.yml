@@ -12,7 +12,7 @@ services:
 
   postgresql:
     image: sameersbn/postgresql:9.6-2
-    env_file: /var/data/config/gitlab/gitlab.env
+    env_file: ./gitlab.env
     volumes:
     - ./postgresql:/var/lib/postgresql:Z
     networks:
@@ -23,7 +23,7 @@ services:
     env_file: ./gitlab.env
     networks:
     - internal
-    - traefik_public
+    - traefik-public
     deploy:
       labels:
         - traefik.frontend.rule=Host:gitlab.vps.icmjung.fr
@@ -39,7 +39,7 @@ services:
     - ./gitlab:/home/git/data:Z
 
 networks:
-  traefik_public:
+  traefik-public:
     external: true
   internal:
     driver: overlay
