@@ -1,0 +1,42 @@
+version: '3.3'
+
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:latest
+    restart: always
+    deploy:
+      placement:
+        constraints:
+          - node.role == worker
+    container_name: gitlab
+    environment:
+      GITLAB_OMNIBUS_CONFIG: |
+        external_url 'https://gitlab.domain.com'
+        registry_external_url 'https://registry.vps.icmjung.fr'
+        nginx['listen_port'] = '80'
+        nginx['listen_https'] = false
+        registry_nginx['listen_port'] = '80'
+        registry_nginx['listen_https'] = false
+        gitlab_rails['registry_enabled'] = true
+        gitlab_rails['gitlab_shell_ssh_port'] = 22
+    ports:
+      - '22:22'
+    volumes:
+      - ./persist/gitlab/config:/etc/gitlab
+      - ./persist/gitlab/logs:/var/log/gitlab
+      - ./persist/gitlab/data:/var/opt/gitlab
+    networks:
+      - traefik-public
+    labels:
+      - traefik.docker.network=traefik-public
+      - traefik.ci.frontend.rule=Host:gitlab.vps.icmjung.fr
+      - traefik.ci.port=80
+      - traefik.ci.frontend.entryPoints=http,https
+      - traefik.reg.frontend.rule=Host:registry.vps.icmjung.fr
+      - traefik.reg.port=80
+      - traefik.reg.frontend.entryPoints=http,https
+
+networks:
+  traefik-public:
+    external: true
+

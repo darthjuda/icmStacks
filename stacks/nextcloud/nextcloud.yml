@@ -1,0 +1,31 @@
+version: 3.3
+
+
+
+networks:
+      - agent-network
+      - traefik-public
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+          - node.labels.portainer.portainer-data == true
+      labels:
+        - traefik.frontend.rule=Host:${DOMAIN}
+        - traefik.enable=true
+        - traefik.port=9000
+        - traefik.tags=traefik-public
+        - traefik.docker.network=traefik-public
+        # Traefik service that listens to HTTP
+        - traefik.redirectorservice.frontend.entryPoints=http
+        - traefik.redirectorservice.frontend.redirect.entryPoint=https
+        # Traefik service that listens to HTTPS
+        - traefik.webservice.frontend.entryPoints=https
+
+networks:
+    traefik-public:
+    external: true
+
+volumes:
+  portainer-data:
+
