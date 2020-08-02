@@ -1,0 +1,54 @@
+version: "3.7"
+services:
+  registry:
+    restart: always
+    image: registry:2
+    ports:
+      - 5000:5000
+    environment:
+      REGISTRY_HTTP_TLS_CERTIFICATE: /run/secrets/certificate.crt
+      REGISTRY_HTTP_TLS_KEY: /run/secrets/certificate.key
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      REGISTRY_HTTP_SECRET: <<CHANGE ME TO A RANDOM VALUE>>
+    volumes:
+      - type: volume
+        source: registry.library
+        target: /var/lib/registry
+        volume:
+          nocopy: true
+      - type: volume
+        source: registry.auth
+        target: /auth
+    networks:
+      - web
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    secrets:
+      - certificate.key
+      - certificate.crt
+volumes:
+  registry.library:
+    driver: local
+    driver_opts:
+      type: none
+      device: /data/docker/registry/library
+      o: bind
+  registry.auth:
+    driver: local
+    driver_opts:
+      type: none
+      device: /data/docker/registry/auth
+      o: bind
+networks:
+  web:
+secrets:
+  certificate.key:
+    external: true
+    name: certificates.docker.example.com.key.pem
+  certificate.crt:
+    external: true
+    name: certificates.docker.example.com.pub.pem
+	
