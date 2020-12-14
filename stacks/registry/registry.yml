@@ -26,7 +26,7 @@ registry:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
         - traefik.constraint-label=traefik-public
-        - traefik.http.routers.registry-http.rule=Host(`${DOMAIN?Variable not set}`)
+        - traefik.http.routers.registry-http.rule=Host(`${REGISTRY_DOMAIN?Variable not set}`)
         - traefik.http.routers.registry-http.entrypoints=http
         - traefik.http.routers.registry-http.middlewares=https-redirect
         - traefik.http.routers.registry-https.rule=Host(`${DOMAIN?Variable not set}`)
