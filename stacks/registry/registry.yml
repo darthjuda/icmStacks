@@ -13,9 +13,9 @@ registry:
       REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
     volumes:
       volumes:
-        - /path/data:/var/lib/registry
-        - /path/certs:/certs
-        - /path/auth:/auth
+        - ./registry-data:/var/lib/registry
+        - ./certs:/certs
+        - ./auth:/auth
     networks:
       - traefik-public
     deploy:
@@ -29,7 +29,7 @@ registry:
         - traefik.http.routers.registry-http.rule=Host(`${REGISTRY_DOMAIN?Variable not set}`)
         - traefik.http.routers.registry-http.entrypoints=http
         - traefik.http.routers.registry-http.middlewares=https-redirect
-        - traefik.http.routers.registry-https.rule=Host(`${DOMAIN?Variable not set}`)
+        - traefik.http.routers.registry-https.rule=Host(`${REGISTRY_DOMAIN?Variable not set}`)
         - traefik.http.routers.registry-https.entrypoints=https
         - traefik.http.routers.registry-https.tls=true
         - traefik.http.routers.registry-https.tls.certresolver=le
