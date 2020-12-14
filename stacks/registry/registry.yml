@@ -1,0 +1,40 @@
+version: '3.3'
+
+registry:
+    restart: always
+    image: registry:2
+    ports:
+      - 5000:5000
+    environment:
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
+      REGISTRY_HTTP_TLS_KEY: /certs/domain.key
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+    volumes:
+      volumes:
+        - /path/data:/var/lib/registry
+        - /path/certs:/certs
+        - /path/auth:/auth
+    networks:
+      - traefik-public
+    deploy:
+      placement:
+        constraints:
+          - node.labels.registry == true
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.registry-http.rule=Host(`${DOMAIN?Variable not set}`)
+        - traefik.http.routers.registry-http.entrypoints=http
+        - traefik.http.routers.registry-http.middlewares=https-redirect
+        - traefik.http.routers.registry-https.rule=Host(`${DOMAIN?Variable not set}`)
+        - traefik.http.routers.registry-https.entrypoints=https
+        - traefik.http.routers.registry-https.tls=true
+        - traefik.http.routers.registry-https.tls.certresolver=le
+        - traefik.http.services.registry.loadbalancer.server.port=9000
+
+networks:
+  traefik-public:
+    external: true
