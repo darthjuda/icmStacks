@@ -6,16 +6,11 @@ services:
     image: registry:2
     ports:
       - 5000:5000
-    environment:
-      REGISTRY_HTTP_TLS_CERTIFICATE: /certs/domain.crt
-      REGISTRY_HTTP_TLS_KEY: /certs/domain.key
-      REGISTRY_AUTH: htpasswd
-      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
-      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
     volumes:
         - ./registry-data:/var/lib/registry
         - ./certs:/certs
         - ./auth:/auth
+
     networks:
       - traefik-public
     deploy:
@@ -33,7 +28,7 @@ services:
         - traefik.http.routers.registry-https.entrypoints=https
         - traefik.http.routers.registry-https.tls=true
         - traefik.http.routers.registry-https.tls.certresolver=le
-        - traefik.http.services.registry.loadbalancer.server.port=9000
+        - traefik.http.services.registry.loadbalancer.server.port=5000
 
 networks:
   traefik-public:
