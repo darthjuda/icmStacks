@@ -16,7 +16,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.registry == true
+          - node.labels.registry.registry-data == true
       labels:
         - traefik.enable=true
         - traefik.docker.network=traefik-public
