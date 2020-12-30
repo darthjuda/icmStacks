@@ -8,9 +8,9 @@ services:
      - '80:80'
      - '443:443'
    volumes:
-     - './gitlab/configs:/etc/gitlab'
-     - './gitlab/logs:/var/log/gitlab'
-     - './gitlab/data:/var/opt/gitlab'
+     - './configs:/etc/gitlab'
+     - './logs:/var/log/gitlab'
+     - './data:/var/opt/gitlab'
    networks:
      - traefik-public
    deploy:
