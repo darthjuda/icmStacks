@@ -4,9 +4,6 @@ services:
    image: 'gitlab/gitlab-ce:latest'
    restart: always
    hostname: 'gitlab.${DOMAIN?Variable not set}'
-   ports:
-     - '80:80'
-     - '443:443'
    volumes:
      - './configs:/etc/gitlab'
      - './logs:/var/log/gitlab'
