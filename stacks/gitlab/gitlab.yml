@@ -22,7 +22,7 @@ services:
         gitlab_rails['smtp_enable_starttls_auto'] = true
         gitlab_rails['gitlab_shell_ssh_port'] = 22
     volumes:
-      - './config:/etc/gitlab'
+      - './configs:/etc/gitlab'
       - './logs:/var/log/gitlab'
       - './data:/var/opt/gitlab'
     networks:
