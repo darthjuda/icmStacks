@@ -25,7 +25,7 @@ services:
        - traefik.http.routers.gitlab-https.entrypoints=https
        - traefik.http.routers.gitlab-https.tls=true
        - traefik.http.routers.gitlab-https.tls.certresolver=le
-       - traefik.http.services.gitlab.loadbalancer.server.port=8080
+       - traefik.http.services.gitlab.loadbalancer.server.port=8081
 
 networks:
  traefik-public:
