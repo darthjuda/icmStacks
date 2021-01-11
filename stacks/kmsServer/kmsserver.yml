@@ -1,0 +1,22 @@
+version: "3.7"
+services:
+
+  vlmcsd:
+    build: .
+    ports:
+      - 1688:1688
+    restart: always
+    # networks:
+    #   - traefik-public
+    #
+    # label:
+    #   - traefik.enable=true
+    #   - traefik.docker.network=traefik-public
+    #   - traefik.constraint-label=traefik-public
+    #   - traefik.http.routers.kmsServer-http.rule=Host(`kmsServer.${DOMAIN?Variable not set}`)
+    #   - traefik.http.routers.kmsServer-http.entrypoints=http
+    #   - traefik.http.routers.kmsServer-http.middlewares=https-redirect
+    #   - traefik.http.routers.kmsServer-https.rule=Host(`kmsServer.${DOMAIN?Variable not set}`)
+    #   - traefik.http.routers.kmsServer-https.entrypoints=https
+    #   - traefik.http.routers.kmsServer-https.tls=true
+    #   - traefik.http.routers.kmsServer-https.tls.certresolver=le
