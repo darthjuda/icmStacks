@@ -2,21 +2,26 @@ version: "3.7"
 
 services:
   vlmcsd:
+    restart: always
     image: registry.home.icmjung.fr/kms:latest
     ports:
       - 1688:1688
-    restart: always
-    # networks:
-    #   - traefik-public
-    # deploy:
-    #   label:
-    #     - traefik.enable=true
-    #     - traefik.docker.network=traefik-public
-    #     - traefik.constraint-label=traefik-public
-    #     - traefik.http.routers.kmsServer-http.rule=Host(`kmsServer.${DOMAIN?Variable not set}`)
-    #     - traefik.http.routers.kmsServer-http.entrypoints=http
-    #     - traefik.http.routers.kmsServer-http.middlewares=https-redirect
-    #     - traefik.http.routers.kmsServer-https.rule=Host(`kmsServer.${DOMAIN?Variable not set}`)
-    #     - traefik.http.routers.kmsServer-https.entrypoints=https
-    #     - traefik.http.routers.kmsServer-https.tls=true
-    #     - traefik.http.routers.kmsServer-https.tls.certresolver=le
+    networks:
+      - traefik-public
+    deploy:
+      label:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.kmsserver-http.rule=Host(`kmsserver.${DOMAIN?Variable not set}`)
+        - traefik.http.routers.kmsserver-http.entrypoints=http
+        - traefik.http.routers.kmsserver-http.middlewares=https-redirect
+        - traefik.http.routers.kmsserver-https.rule=Host(`kmsserver.${DOMAIN?Variable not set}`)
+        - traefik.http.routers.kmsserver-https.entrypoints=https
+        - traefik.http.routers.kmsserver-https.tls=true
+        - traefik.http.routers.kmsserver-https.tls.certresolver=le
+        - traefik.http.services.kmsserver.loadbalancer.server.port=1688
+
+networks:
+  traefik-public:
+    external: true
