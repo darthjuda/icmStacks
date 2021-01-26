@@ -6,8 +6,8 @@ services:
     ports:
       - 1688:1688
     restart: always
-    networks:
-      - traefik-public
+    # networks:
+    #   - traefik-public
 
     # label:
     #   - traefik.enable=true
