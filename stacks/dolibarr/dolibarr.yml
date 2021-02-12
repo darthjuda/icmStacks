@@ -9,7 +9,7 @@ services:
       - DOLIDB_PORT=5432
       - DOLI_DB_NAME=doli_icm
       - DOLI_DB_USER=darthjuda
-      #- DOLI_DB_PASSWORD_FILE=/run/secrets/pgsql_root_password
+      - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
       - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
     volumes:
       - ./html:/var/www/html
