@@ -19,7 +19,6 @@ services:
       - ./config:/var/www/html/conf
     networks:
       - traefik-public
-      - private
     deploy:
       placement:
         constraints: [node.role == manager]
@@ -64,8 +63,6 @@ secrets:
     external: true
 networks:
   traefik-public:
-    external: true
-  private:
     external: true
 volumes:
   html:
