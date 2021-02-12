@@ -55,7 +55,7 @@ services:
     image: adminer
     restart: always
     ports:
-      - 8080:8080
+      - 8082:8080
 
 
 secrets:
