@@ -11,7 +11,7 @@ services:
       - DOLIDB_PORT=5432
       - DOLI_DB_NAME=doli_icm
       - DOLI_DB_USER=darthjuda
-      - DOLI_DB_PASSWORD_FILE=/run/secrets/pgsql_root_password
+      #- DOLI_DB_PASSWORD_FILE=/run/secrets/pgsql_root_password
       - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
     volumes:
       - ./html:/var/www/html
@@ -46,8 +46,9 @@ services:
     restart: always
     environment:
       POSTGRES_USER: "darthjuda"
-      POSTGRES_PASSWORD_FILE: /run/secrets/pgsql_root_password
       POSTGRES_DB: "doli_icm"
+    secrets:
+      - pgsql_root_password
     volumes:
       - ./data:/var/lib/postgresql/data
 
