@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   dolibarr:
-    image: monogramm/docker-dolibarr
+    image: tuxgasy/docker-dolibarr
     environment:
       - DOLI_DB_TYPE=pgsql
       - DOLI_DB_HOST=db
