@@ -8,7 +8,7 @@ services:
       - DOLI_DB_HOST=db
       - DOLI_DB_PORT=5432
       - DOLI_DB_NAME=doli_icm
-      - DOLI_DB_USER=darthjuda
+      - DOLI_DB_USER=postgres
       - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
       - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
     volumes:
@@ -46,7 +46,7 @@ services:
       POSTGRES_USER: "darthjuda"
       POSTGRES_DB: "doli_icm"
       POSTGRES_PASSWORD: ${PASSWORD?Variable not Set}
-      
+
 networks:
   traefik-public:
     external: true
