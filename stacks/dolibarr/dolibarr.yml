@@ -52,7 +52,7 @@ services:
       - ./data:/var/lib/postgresql/data
 
 secrets:
-  mysql_root_password:
+  pgsql_root_password:
     external: true
 networks:
   traefik-public:
