@@ -2,4 +2,77 @@ version: "3.7"
 
 services:
   dolibarr:
-    image: 
+    image: monogramm/docker-dolibarr
+    secrets:
+      - mysql_root_password
+    environment:
+      - DOLI_DB_TYPE=pgsql
+      - DOLI_DB_HOST=db
+      - DOLIDB_PORT=5432
+      - DOLI_DB_NAME=doli_icm
+      - DOLI_DB_USER=darthjuda
+      - DOLI_DB_PASSWORD_FILE=/run/secrets/mysql_root_password
+      - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
+    volumes:
+      - ./html:/var/www/html
+      - ./doc:/var/www/documents
+      - ./config:/var/www/html/conf
+    networks:
+      - traefik-public
+      - private
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      labels:
+        - traefik.enable=true
+        - traefik.docker.network=traefik-public
+        - traefik.constraint-label=traefik-public
+        - traefik.http.routers.dolibarr.rule=Host(`erp.${DOMAIN?Variable not Set}`)
+        - traefik.http.routers.dolibarr-http.entrypoints=http
+        - traefik.http.routers.swarmpit-http.middlewares=https-redirect
+        - traefik.http.routers.swarmpit-https.rule=Host(`erp.${DOMAIN?Variable not Set}`)
+        - traefik.http.routers.swarmpit-https.entrypoints=https
+        - traefik.http.routers.swarmpit-https.tls=true
+        - traefik.http.routers.swarmpit-https.tls.certresolver=le
+        - traefik.http.services.swarmpit.loadbalancer.server.port=3306
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: "darthjuda"
+      POSTGRES_PASSWORD_FILE: /run/secrets/mysql_root_password
+      POSTGRES_DB: "doli_icm"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+
+
+secrets:
+  mysql_root_password:
+    external: true
+networks:
+  traefik-public:
+    external: true
+  private:
+    external: true
+volumes:
+  html:
+    driver: "local"
+  doc:
+    driver: "local"
+  config:
+    driver: "local"
+  data:
+    driver: "local"
