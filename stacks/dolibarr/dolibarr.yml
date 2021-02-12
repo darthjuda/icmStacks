@@ -17,6 +17,8 @@ services:
       - ./config:/var/www/html/conf
     networks:
       - traefik-public
+    links:
+      - db  
     deploy:
       placement:
         constraints: [node.role == manager]
