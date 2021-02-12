@@ -3,14 +3,14 @@ version: "3.7"
 services:
   dolibarr:
     image: monogramm/docker-dolibarr
-    # environment:
-    #   - DOLI_DB_TYPE=pgsql
-    #   - DOLI_DB_HOST=db
-    #   - DOLI_DB_PORT=5432
-    #   - DOLI_DB_NAME=doli_icm
-    #   - DOLI_DB_USER=postgres
-    #   - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
-    #   - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
+    environment:
+      - DOLI_DB_TYPE=pgsql
+      - DOLI_DB_HOST=db
+      - DOLI_DB_PORT=5432
+      - DOLI_DB_NAME=doli_icm
+      - DOLI_DB_USER=root
+      - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
+      - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
     volumes:
       - ./html:/var/www/html
       - ./doc:/var/www/documents
