@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   dolibarr:
-    image: tuxgasy/dolibarr
+    image: monogramm/docker-dolibarr
     environment:
       - DOLI_DB_TYPE=pgsql
       - DOLI_DB_HOST=db
@@ -17,8 +17,6 @@ services:
       - ./config:/var/www/html/conf
     networks:
       - traefik-public
-    links:
-      - db  
     deploy:
       placement:
         constraints: [node.role == manager]
