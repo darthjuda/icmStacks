@@ -46,6 +46,7 @@ services:
       POSTGRES_USER: "darthjuda"
       POSTGRES_DB: "doli_icm"
       POSTGRES_PASSWORD: ${PASSWORD?Variable not Set}
+      PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./data:/var/lib/postgresql/data
 
