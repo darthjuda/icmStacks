@@ -32,12 +32,12 @@ services:
         - traefik.constraint-label=traefik-public
         - traefik.http.routers.dolibarr.rule=Host(`erp.${DOMAIN?Variable not Set}`)
         - traefik.http.routers.dolibarr-http.entrypoints=http
-        - traefik.http.routers.swarmpit-http.middlewares=https-redirect
-        - traefik.http.routers.swarmpit-https.rule=Host(`erp.${DOMAIN?Variable not Set}`)
-        - traefik.http.routers.swarmpit-https.entrypoints=https
-        - traefik.http.routers.swarmpit-https.tls=true
-        - traefik.http.routers.swarmpit-https.tls.certresolver=le
-        - traefik.http.services.swarmpit.loadbalancer.server.port=80
+        - traefik.http.routers.dolibarr-http.middlewares=https-redirect
+        - traefik.http.routers.dolibarr-https.rule=Host(`erp.${DOMAIN?Variable not Set}`)
+        - traefik.http.routers.dolibarr-https.entrypoints=https
+        - traefik.http.routers.dolibarr-https.tls=true
+        - traefik.http.routers.dolibarr-https.tls.certresolver=le
+        - traefik.http.services.dolibarr.loadbalancer.server.port=80
 
   db:
     image: postgres
