@@ -6,7 +6,7 @@ services:
     environment:
       - DOLI_DB_TYPE=pgsql
       - DOLI_DB_HOST=db
-      - DOLI_DB_PORT=5432
+      - DOLI_DB_HOST_PORT=5432
       - DOLI_DB_NAME=doli_icm
       - DOLI_DB_USER=darthjuda
       - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
