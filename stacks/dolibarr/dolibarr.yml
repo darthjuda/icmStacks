@@ -3,8 +3,6 @@ version: "3.7"
 services:
   dolibarr:
     image: monogramm/docker-dolibarr
-    secrets:
-      - pgsql_root_password
     environment:
       - DOLI_DB_TYPE=pgsql
       - DOLI_DB_HOST=db
@@ -47,14 +45,11 @@ services:
     environment:
       POSTGRES_USER: "darthjuda"
       POSTGRES_DB: "doli_icm"
-    secrets:
-      - pgsql_root_password
+      POSTGRES_PASSWORD: ${PASSWORD?Variable not Set}
     volumes:
       - ./data:/var/lib/postgresql/data
 
-secrets:
-  pgsql_root_password:
-    external: true
+
 networks:
   traefik-public:
     external: true
