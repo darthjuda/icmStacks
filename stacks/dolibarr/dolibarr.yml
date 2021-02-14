@@ -4,6 +4,7 @@ services:
   dolibarr:
     image: monogramm/docker-dolibarr
     environment:
+      - DOLI_INSTALL_AUTO=1
       - DOLI_DB_TYPE=pgsql
       - DOLI_DB_HOST=db
       - DOLI_DB_HOST_PORT=5432
@@ -54,7 +55,7 @@ networks:
   traefik-public:
     external: true
   private:
-    external: true  
+    external: true
 volumes:
   html:
     driver: "local"
