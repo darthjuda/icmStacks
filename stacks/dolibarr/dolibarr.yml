@@ -17,6 +17,7 @@ services:
       - ./config:/var/www/html/conf
     networks:
       - traefik-public
+      - private
     deploy:
       placement:
         constraints: [node.role == manager]
@@ -46,10 +47,14 @@ services:
       POSTGRES_USER: "darthjuda"
       POSTGRES_DB: "doli_icm"
       POSTGRES_PASSWORD: ${PASSWORD?Variable not Set}
+    ports:
+      - 5432:5432
 
 networks:
   traefik-public:
     external: true
+  private:
+    external: true  
 volumes:
   html:
     driver: "local"
