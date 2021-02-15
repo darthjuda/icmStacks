@@ -17,8 +17,8 @@ services:
     environment:
       MYSQL_USER: darthjuda
       MYSQL_DATABASE: icm
-      MYSQL_ROOT_PASSWORD_FILE: $PASSWORD
-      MYSQL_PASSWORD_FILE: $PASSWORD
+      MYSQL_ROOT_PASSWORD: $PASSWORD
+      MYSQL_PASSWORD: $PASSWORD
     networks:
       - dbnet
     volumes:
