@@ -5,10 +5,10 @@ services:
     image: monogramm/docker-dolibarr
     environment:
       - DOLI_INSTALL_AUTO=1
-      - DOLI_DB_TYPE=pgsql
-      - DOLI_DB_HOST=psqldb
-      - DOLI_DB_HOST_PORT=5432
-      - DOLI_DB_NAME=doli_icm
+      - DOLI_DB_TYPE=mysql
+      - DOLI_DB_HOST=mysqldb
+      - DOLI_DB_HOST_PORT=3306
+      - DOLI_DB_NAME=icm
       - DOLI_DB_USER=darthjuda
       - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
       - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
@@ -18,6 +18,7 @@ services:
       - ./config:/var/www/html/conf
     networks:
       - traefik-public
+      - dbnet
     deploy:
       placement:
         constraints: [node.role == manager]
@@ -43,6 +44,8 @@ services:
 networks:
   traefik-public:
     external: true
+  dbnet:
+    external: true  
 volumes:
   html:
     driver: "local"
