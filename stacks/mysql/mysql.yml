@@ -3,9 +3,6 @@ version: '3.7'
 services:
   db:
     image: mysql
-    secrets:
-      - db_root_password
-      - db_dba_password
     deploy:
       replicas: 1
       placement:
@@ -20,8 +17,8 @@ services:
     environment:
       MYSQL_USER: darthjuda
       MYSQL_DATABASE: icm
-      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/db_root_password
-      MYSQL_PASSWORD_FILE: /run/secrets/db_dba_password
+      MYSQL_ROOT_PASSWORD_FILE: $PASSWORD
+      MYSQL_PASSWORD_FILE: $PASSWORD
     networks:
       - dbnet
     volumes:
@@ -29,12 +26,6 @@ services:
       - type: bind
         source: ./data/mysql
         target: /var/lib/mysql
-
-secrets:
-  db_root_password:
-    external: true
-  db_dba_password:
-    external: true
 
 networks:
   dbnet:
