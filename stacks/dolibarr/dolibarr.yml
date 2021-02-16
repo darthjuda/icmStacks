@@ -7,7 +7,7 @@ services:
       - DOLI_INSTALL_AUTO=1
       - DOLI_DB_TYPE=mysql
       - DOLI_DB_HOST=mysqldb
-      - DOLI_DB_PORT=3306
+      - DOLI_DB_HOST_PORT=3306
       - DOLI_DB_NAME=icm
       - DOLI_DB_USER=darthjuda
       - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
