@@ -5,7 +5,7 @@ services:
     image: monogramm/docker-dolibarr
     environment:
       - DOLI_INSTALL_AUTO=1
-      - DOLI_DB_TYPE=mysqli
+      - DOLI_DB_TYPE=mysql
       - DOLI_DB_HOST=mysqldb
       - DOLI_DB_PORT=3306
       - DOLI_DB_NAME=icm
