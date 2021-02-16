@@ -5,17 +5,19 @@ services:
     image: monogramm/docker-dolibarr
     environment:
       - DOLI_INSTALL_AUTO=1
-      - DOLI_DB_TYPE=mysql
-      - DOLI_DB_HOST=localhost
-      - DOLI_DB_HOST_PORT=3306
+      - DOLI_DB_TYPE=mysqli
+      - DOLI_DB_HOST=mysqldb
+      - DOLI_DB_PORT=3306
       - DOLI_DB_NAME=icm
       - DOLI_DB_USER=darthjuda
       - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
       - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
     volumes:
-      - ./html:/var/www/html/
+      - ./html:/var/www//html
+      - ./custom:/var/www/html/custom
       - ./doc:/var/www/documents
       - ./config:/var/www/html/conf
+      # - ./theme:/var/www/html/theme
     networks:
       - traefik-public
       - dbnet
@@ -53,3 +55,5 @@ volumes:
     driver: "local"
   config:
     driver: "local"
+  custom:
+    driver: "local"  
