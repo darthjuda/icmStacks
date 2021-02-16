@@ -1,51 +1,47 @@
 version: "3.7"
 
 services:
-  dolibarr:
-    image: tuxgasy/dolibarr:latest
-    environment:
-      - DOLI_INSTALL_AUTO=1
-      - DOLI_DB_TYPE=mysql
-      - DOLI_DB_HOST=mysqldb_db
-      - DOLI_DB_HOST_PORT=3306
-      - DOLI_DB_NAME=icm
-      - DOLI_DB_USER=darthjuda
-      - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
-      - DOLI_DB_ROOT_LOGIN=root
-      - DOLI_DB_ROOT_PASSWORD= ${PASSWORD?Variable not Set}
-      - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
-    volumes:
-      - ./doc:/var/www/documents
-    networks:
-      - traefik-public
-      - dbnet
-    deploy:
-      placement:
-        constraints: [node.role == manager]
-      replicas: 1
-      update_config:
-        parallelism: 2
-        delay: 10s
-      restart_policy:
-        condition: on-failure
-      labels:
-        - traefik.enable=true
-        - traefik.docker.network=traefik-public
-        - traefik.constraint-label=traefik-public
-        - traefik.http.routers.dolibarr.rule=Host(`erp.${DOMAIN?Variable not Set}`)
-        - traefik.http.routers.dolibarr-http.entrypoints=http
-        - traefik.http.routers.dolibarr-http.middlewares=https-redirect
-        - traefik.http.routers.dolibarr-https.rule=Host(`erp.${DOMAIN?Variable not Set}`)
-        - traefik.http.routers.dolibarr-https.entrypoints=https
-        - traefik.http.routers.dolibarr-https.tls=true
-        - traefik.http.routers.dolibarr-https.tls.certresolver=le
-        - traefik.http.services.dolibarr.loadbalancer.server.port=80
+    mariadb:
+        image: mariadb:latest
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: dolibarr
+
+    web:
+        image: tuxgasy/dolibarr
+        environment:
+            DOLI_DB_HOST: mariadb
+            DOLI_DB_USER: root
+            DOLI_DB_PASSWORD: root
+            DOLI_DB_NAME: dolibarr
+            DOLI_URL_ROOT: 'erp.${DOMAIN?Variable not Set}'
+            PHP_INI_DATE_TIMEZONE: 'Europe/Paris'
+        links:
+            - mariadb
+        networks:
+          - traefik-public
+        deploy:
+          placement:
+            constraints: [node.role == manager]
+          replicas: 1
+          update_config:
+            parallelism: 2
+            delay: 10s
+          restart_policy:
+            condition: on-failure
+          labels:
+            - traefik.enable=true
+            - traefik.docker.network=traefik-public
+            - traefik.constraint-label=traefik-public
+            - traefik.http.routers.dolibarr.rule=Host(`erp.${DOMAIN?Variable not Set}`)
+            - traefik.http.routers.dolibarr-http.entrypoints=http
+            - traefik.http.routers.dolibarr-http.middlewares=https-redirect
+            - traefik.http.routers.dolibarr-https.rule=Host(`erp.${DOMAIN?Variable not Set}`)
+            - traefik.http.routers.dolibarr-https.entrypoints=https
+            - traefik.http.routers.dolibarr-https.tls=true
+            - traefik.http.routers.dolibarr-https.tls.certresolver=le
+            - traefik.http.services.dolibarr.loadbalancer.server.port=80
 
 networks:
   traefik-public:
     external: true
-  dbnet:
-    external: true
-volumes:
-  doc:
-    driver: "local"
