@@ -13,7 +13,7 @@ services:
       - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
       - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
     volumes:
-      - ./html:/var/www/html
+      - ./html:/var/www/html/
       - ./doc:/var/www/documents
       - ./config:/var/www/html/conf
     networks:
@@ -45,7 +45,7 @@ networks:
   traefik-public:
     external: true
   dbnet:
-    external: true  
+    external: true
 volumes:
   html:
     driver: "local"
