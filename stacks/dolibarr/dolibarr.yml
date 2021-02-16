@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   dolibarr:
-    image: monogramm/docker-dolibarr
+    image: tuxgasy/dolibarr:latest
     environment:
       - DOLI_INSTALL_AUTO=1
       - DOLI_DB_TYPE=mysql
@@ -15,11 +15,7 @@ services:
       - DOLI_DB_ROOT_PASSWORD= ${PASSWORD?Variable not Set}
       - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
     volumes:
-      - ./html:/var/www//html
-      - ./custom:/var/www/html/custom
       - ./doc:/var/www/documents
-      - ./config:/var/www/html/conf
-      # - ./theme:/var/www/html/theme
     networks:
       - traefik-public
       - dbnet
@@ -51,11 +47,5 @@ networks:
   dbnet:
     external: true
 volumes:
-  html:
-    driver: "local"
   doc:
-    driver: "local"
-  config:
-    driver: "local"
-  custom:
     driver: "local"
