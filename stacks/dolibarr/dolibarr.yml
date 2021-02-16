@@ -11,6 +11,7 @@ services:
       - DOLI_DB_NAME=icm
       - DOLI_DB_USER=darthjuda
       - DOLI_DB_PASSWORD= ${PASSWORD?Variable not Set}
+      - DOLI_DB_ROOT_LOGIN=root
       - DOLI_DB_ROOT_PASSWORD= ${PASSWORD?Variable not Set}
       - DOLI_URL_ROOT=erp.${DOMAIN?Variable not Set}
     volumes:
